@@ -1,0 +1,23 @@
+.navg{
+    display: flex;
+    flex-direction: row;
+}
+
+.headBg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90px;
+    background-image: url(../../public/images/mgH.jpg);
+    background-size: cover;
+
+}
+
+.foot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    background-image: url(../../public/images/mgH.jpg);
+    background-size: cover;
+}

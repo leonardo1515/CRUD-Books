@@ -11,7 +11,7 @@ import DivBtnProps from "../components/btnNav/StyledDivBtn";
 
 const Home: React.FC = () => (
   <StyledApp mode="dark">
-    <div className="headBg"><p>Minha primeira pagina com react</p></div>
+    <div className="headBg"><p>Minha primeira pagina react</p></div>
 
     <nav className="navg">
       <DivBtnProps mode="dark">

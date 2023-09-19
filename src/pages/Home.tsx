@@ -1,17 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./style.css" 
-import ContenteMain from "../components/Content/Contente";
-import BtnNav from "../components/btnNav/BtnNav";
+import "./style.css";
 import StyledApp from "../components/StyledApp";
-
-import MonitorIcon from '@mui/icons-material/Monitor';
-import DivBtnProps from "../components/btnNav/StyledDivBtn";
-
+import Form from "../components/Form/Form";
 
 const Home: React.FC = () => (
   <StyledApp mode="dark">
-    <div className="headBg"><p>Minha primeira pagina com react</p></div>
+    <Form></Form>
+    {/* <div className="headBg"><p>Minha primeira pagina com react</p></div>
 
     <nav className="navg">
       <DivBtnProps mode="dark">
@@ -59,8 +54,7 @@ const Home: React.FC = () => (
     </main>
     <footer className="foot">
       <p>Contato</p>
-    </footer>
+    </footer> */}
   </StyledApp>
-
 );
 export default Home;

@@ -1,10 +1,12 @@
 import "./style.css";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
+import { FormType, Livro } from "../types";
+import TransitionAlerts from "../Alerts/Alert";
 
 const style = {
   position: "absolute" as "absolute",
@@ -18,37 +20,33 @@ const style = {
   p: 4,
 };
 
-const Form: React.FC = () => {
+const Form: React.FC<FormType> = ({ booksData }) => {
+  const [openAlert, setOpenAlert] = useState(false);
   const [titulo, setTitulo] = useState<string>("");
   const [autor, setAutor] = useState<string>("");
   const [publicacao, setPublicacao] = useState<any>("");
   const [cadastro, setCadastro] = useState<any>("");
   const [genero, setGnero] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
-  const [data, setData] = useState<Livro[]>([]);
+  let [data, setData] = useState<Livro[]>([]);
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const showAlert = () => setOpenAlert(true);
+  const closeAlert = () => setOpenAlert(false);
 
-  interface Livro {
-    titulo: string;
-    autor: string;
-    publicacao: any;
-    cadastro: any;
-    genero: string;
-    descricao: string;
-  }
-
-  // useEffect(() => {
-  //   const getLocalStorage = JSON.parse(localStorage.getItem("livro") || "");
-  //   if (getLocalStorage === "") {
-  //     setData([]);
-  //   }
-  //   setData(getLocalStorage);
-  // }, []);
+  useEffect(() => {
+    data = booksData;
+  }, [booksData]);
 
   function test() {
+    showAlert();
+  }
+
+  const addLivro = useCallback(() => {
     const livro = {
+      id: Math.floor(Date.now() / 1000),
       titulo: titulo,
       autor: autor,
       publicacao: publicacao,
@@ -58,11 +56,24 @@ const Form: React.FC = () => {
     };
 
     data.push(livro);
-
     localStorage.setItem("livro", JSON.stringify(data));
 
     handleClose();
-  }
+  }, [autor, cadastro, data, descricao, genero, publicacao, titulo]);
+
+  const deletLivro = useCallback(
+    (id: number) => {
+      let book = data.findIndex((item) => item.id === id);
+      if (book >= 0) {
+        data.splice(book, 1);
+      }
+
+      localStorage.setItem("task", JSON.stringify(data));
+
+      alert("Nota excluida com sucesso.");
+    },
+    [data]
+  );
 
   return (
     <div>
@@ -128,6 +139,13 @@ const Form: React.FC = () => {
           <Button variant="contained" onClick={test}>
             Contained
           </Button>
+          <TransitionAlerts
+            message="deu errado"
+            title="Error"
+            type="info"
+            open={openAlert}
+            actionClose={closeAlert}
+          ></TransitionAlerts>
         </Box>
       </Modal>
     </div>

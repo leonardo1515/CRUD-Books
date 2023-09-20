@@ -1,5 +1,7 @@
 import { Livro } from "./index";
 
 export type FormType = {
-  booksData: Livro[];
+  open: boolean;
+  handleOpen: () => void;
+  handleClose: () => void;
 };

@@ -3,30 +3,20 @@ import "./style.css";
 import StyledApp from "../components/StyledApp";
 import Form from "../components/Form/Form";
 import { Livro } from "../components/types";
+import Tabela from "../components/Tabela/Tabela";
+import GetLocalStorage from "../components/Atualizar/Atualizar";
 
 const Home: React.FC = () => {
   const [data, setData] = useState<Livro[]>([]);
 
   useEffect(() => {
-    const getLocalStorage = localStorage.getItem("livros") as string;
-    if (
-      !getLocalStorage ||
-      getLocalStorage === "" ||
-      getLocalStorage === null
-    ) {
-      localStorageDefalut();
-    }
-    const livros = JSON.parse(getLocalStorage);
+    const livros = GetLocalStorage();
     setData(livros);
   }, []);
 
-  function localStorageDefalut() {
-    setData([]);
-  }
-
   return (
     <StyledApp mode="dark">
-      <Form booksData={data}></Form>
+      <Tabela booksData={data} />
       {/* <div className="headBg"><p>Minha primeira pagina com react</p></div>
 
 <nav className="navg">

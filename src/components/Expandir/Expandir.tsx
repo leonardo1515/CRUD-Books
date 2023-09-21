@@ -8,6 +8,7 @@ import { ExpandirType, Livro } from "../types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import GetLocalStorage, { books, upLoad } from "../Atualizar/Atualizar";
+import TransitionAlerts from "../Alerts/Alert";
 
 const style = {
   position: "absolute" as "absolute",
@@ -22,6 +23,11 @@ const style = {
 };
 
 const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
+  let [message, setMessage] = useState<string>("teste");
+  let [title, setTitle] = useState<string>("teste");
+  let [type, setType] = useState<"error" | "warning" | "info" | "success" | "">(
+    "success"
+  );
   const [titulo, setTitulo] = useState<string>("");
   const [autor, setAutor] = useState<string>("");
   const [publicacao, setPublicacao] = useState<any>("");
@@ -74,6 +80,54 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
     (id: number) => {
       const livros = GetLocalStorage();
       allBooks = livros;
+
+      if (titulo === "") {
+        setTitle("ERROR");
+        setMessage("O campo Titulo é obrigatório");
+        setType("error");
+        showAlert();
+        return;
+      }
+
+      if (autor === "") {
+        setTitle("ERROR");
+        setMessage("O campo Autor é obrigatório");
+        setType("error");
+        showAlert();
+        return;
+      }
+
+      if (publicacao === "") {
+        setTitle("ERROR");
+        setMessage("O campo Publiblico é obrigatório");
+        setType("error");
+        showAlert();
+        return;
+      }
+
+      if (cadastro === "") {
+        setTitle("ERROR");
+        setMessage("O campo cadastro é obrigatório");
+        setType("error");
+        showAlert();
+        return;
+      }
+
+      if (genero === "") {
+        setTitle("ERROR");
+        setMessage("O campo Genero é obrigatório");
+        setType("error");
+        showAlert();
+        return;
+      }
+
+      if (descricao === "") {
+        setTitle("ERROR");
+        setMessage("O campo Descrição é obrigatório");
+        setType("error");
+        showAlert();
+        return;
+      }
 
       let book = allBooks.findIndex((item) => item.id === id);
       if (book >= 0) {
@@ -180,6 +234,13 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
               </div>
             );
           })}
+          <TransitionAlerts
+            message={message}
+            title={title}
+            type={type}
+            open={openAlert}
+            actionClose={closeAlert}
+          ></TransitionAlerts>
         </Box>
       </Modal>
     </>

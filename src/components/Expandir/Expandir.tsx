@@ -7,8 +7,10 @@ import { TextField, Typography } from "@mui/material";
 import { ExpandirType, Livro } from "../types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import GetLocalStorage, { books, upLoad } from "../Atualizar/Atualizar";
+import { books } from "../Atualizar/Atualizar";
 import TransitionAlerts from "../Alerts/Alert";
+import ConfirmeModal from "../ConfirmModal/Confirme.Modal";
+import "./style.css";
 
 const style = {
   position: "absolute" as "absolute",
@@ -17,12 +19,13 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "3px solid #000",
   boxShadow: 24,
   p: 4,
 };
 
 const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
+  const [typeConfirm, setTypeConfirm] = useState<string>("");
   let [message, setMessage] = useState<string>("teste");
   let [title, setTitle] = useState<string>("teste");
   let [type, setType] = useState<"error" | "warning" | "info" | "success" | "">(
@@ -35,20 +38,25 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
   const [genero, setGnero] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
   const [openAlert, setOpenAlert] = useState(false);
+  const [openConfirm, setConfirm] = React.useState(false);
   const [open, setExOpen] = React.useState(false);
   const expandirClose = () => setExOpen(false);
-  let livro = books;
-  let [allBooks, setAllBooks] = useState<Livro[]>([]);
+  const showAlert = () => setOpenAlert(true);
+  const closeAlert = () => setOpenAlert(false);
+  const handleOpenConfirm = () => setConfirm(true);
+  const handleCloseConfirm = () => setConfirm(false);
+  const [livroCurret, setLivroCurret] = useState<Livro>();
   let [data, setData] = useState<Livro[]>([]);
+  let livro = books;
 
   const expandirOpen = () => {
     getLivro(idLivro);
     setExOpen(true);
   };
-  // const expandirOpen = () => setExOpen(true);
 
-  const showAlert = () => setOpenAlert(true);
-  const closeAlert = () => setOpenAlert(false);
+  React.useEffect(() => {
+    setTypeConfirm("");
+  }, []);
 
   const getLivro = useCallback(
     (id: number) => {
@@ -61,92 +69,73 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
     [livro]
   );
 
-  const deletLivro = useCallback((id: number) => {
-    const livros = GetLocalStorage();
-    allBooks = livros;
-
-    let book = allBooks.findIndex((item) => item.id === id);
-    if (book >= 0) {
-      allBooks.splice(book, 1);
-    }
-
-    localStorage.setItem("livro", JSON.stringify(allBooks));
-    window.location.reload();
-    upLoad();
-    expandirClose();
+  const deletLivro = useCallback(() => {
+    setTypeConfirm("d");
+    handleOpenConfirm();
   }, []);
 
-  const updateLivro = useCallback(
-    (id: number) => {
-      const livros = GetLocalStorage();
-      allBooks = livros;
+  const updateLivro = useCallback(() => {
+    if (titulo === "") {
+      setTitle("ERROR");
+      setMessage("O campo Titulo é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
 
-      if (titulo === "") {
-        setTitle("ERROR");
-        setMessage("O campo Titulo é obrigatório");
-        setType("error");
-        showAlert();
-        return;
-      }
+    if (autor === "") {
+      setTitle("ERROR");
+      setMessage("O campo Autor é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
 
-      if (autor === "") {
-        setTitle("ERROR");
-        setMessage("O campo Autor é obrigatório");
-        setType("error");
-        showAlert();
-        return;
-      }
+    if (publicacao === "") {
+      setTitle("ERROR");
+      setMessage("O campo Publiblico é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
 
-      if (publicacao === "") {
-        setTitle("ERROR");
-        setMessage("O campo Publiblico é obrigatório");
-        setType("error");
-        showAlert();
-        return;
-      }
+    if (cadastro === "") {
+      setTitle("ERROR");
+      setMessage("O campo cadastro é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
 
-      if (cadastro === "") {
-        setTitle("ERROR");
-        setMessage("O campo cadastro é obrigatório");
-        setType("error");
-        showAlert();
-        return;
-      }
+    if (genero === "") {
+      setTitle("ERROR");
+      setMessage("O campo Genero é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
 
-      if (genero === "") {
-        setTitle("ERROR");
-        setMessage("O campo Genero é obrigatório");
-        setType("error");
-        showAlert();
-        return;
-      }
+    if (descricao === "") {
+      setTitle("ERROR");
+      setMessage("O campo Descrição é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
 
-      if (descricao === "") {
-        setTitle("ERROR");
-        setMessage("O campo Descrição é obrigatório");
-        setType("error");
-        showAlert();
-        return;
-      }
-
-      let book = allBooks.findIndex((item) => item.id === id);
-      if (book >= 0) {
-        allBooks[book].id = id;
-        allBooks[book].titulo = titulo;
-        allBooks[book].autor = autor;
-        allBooks[book].publicacao = publicacao;
-        allBooks[book].cadastro = cadastro;
-        allBooks[book].genero = genero;
-        allBooks[book].descricao = descricao;
-      }
-
-      localStorage.setItem("livro", JSON.stringify(allBooks));
-      window.location.reload();
-      upLoad();
-      expandirClose();
-    },
-    [autor, cadastro, descricao, genero, publicacao, titulo]
-  );
+    const livro: Livro = {
+      id: Math.floor(Date.now() / 1000),
+      titulo: titulo,
+      autor: autor,
+      publicacao: publicacao,
+      cadastro: cadastro,
+      genero: genero,
+      descricao: descricao,
+    };
+    setLivroCurret(livro);
+    setTypeConfirm("");
+    handleOpenConfirm();
+  }, [autor, cadastro, descricao, genero, publicacao, titulo]);
 
   return (
     <>
@@ -157,7 +146,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box className="borderDefault" sx={style}>
           {data.map((item: Livro) => {
             return (
               <div key={item.id}>
@@ -213,7 +202,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                 />
                 <Typography>
                   <DeleteIcon
-                    onClick={() => deletLivro(item.id)}
+                    onClick={() => deletLivro()}
                     sx={{
                       marginRight: "40px",
                       marginLeft: "25px",
@@ -223,7 +212,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                 </Typography>
                 <Typography>
                   <EditIcon
-                    onClick={() => updateLivro(item.id)}
+                    onClick={() => updateLivro()}
                     sx={{
                       marginRight: "40px",
                       marginLeft: "25px",
@@ -240,7 +229,15 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
             type={type}
             open={openAlert}
             actionClose={closeAlert}
-          ></TransitionAlerts>
+          />
+          <ConfirmeModal
+            id={idLivro}
+            livroCurret={livroCurret}
+            typeConfirm={typeConfirm}
+            openConfirm={openConfirm}
+            handleOpenConfirm={handleOpenConfirm}
+            handleCloseConfirm={handleCloseConfirm}
+          />
         </Box>
       </Modal>
     </>

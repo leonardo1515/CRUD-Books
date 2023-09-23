@@ -48,12 +48,14 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       descricao: descricao,
     };
 
-    data.push(livro);
-    localStorage.setItem("livro", JSON.stringify(data));
-
-    upLoad();
-    handleClose();
-  };
+    if (titulo === '' || autor === '' || publicacao === '' || cadastro === '' || genero === '' || descricao === ''){
+      alert ('O(s) campo(s) não pode(m) ficar em branco')
+    } else {data.push(livro);
+      localStorage.setItem("livro", JSON.stringify(data));
+  
+      upLoad();
+      handleClose();}
+    };
 
   return (
     <div>

@@ -93,7 +93,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
 
     if (publicacao === "") {
       setTitle("ERROR");
-      setMessage("O campo Publiblico é obrigatório");
+      setMessage("O campo Publicação é obrigatório");
       setType("error");
       showAlert();
       return;
@@ -109,7 +109,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
 
     if (genero === "") {
       setTitle("ERROR");
-      setMessage("O campo Genero é obrigatório");
+      setMessage("O campo Gênero é obrigatório");
       setType("error");
       showAlert();
       return;
@@ -153,7 +153,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Titulo"
+                  label="Titulo" margin="normal"
                   value={titulo || item.titulo}
                   variant="outlined"
                   onChange={(e) => setTitulo(e.target.value)}
@@ -161,7 +161,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Autor"
+                  label="Autor" margin="normal"
                   value={autor || item.autor}
                   variant="outlined"
                   onChange={(e) => setAutor(e.target.value)}
@@ -170,7 +170,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  type="date"
+                  type="date" margin="normal"
                   value={publicacao || item.publicacao}
                   variant="outlined"
                   onChange={(e) => setPublicacao(e.target.value)}
@@ -179,7 +179,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  type="date"
+                  type="date" margin="normal"
                   value={cadastro || item.cadastro}
                   variant="outlined"
                   onChange={(e) => setCadastro(e.target.value)}
@@ -187,25 +187,28 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                 <TextField
                   fullWidth
                   id="outlined-basic"
-                  label="Gênero"
+                  label="Gênero" margin="normal"
                   value={genero || item.genero}
                   variant="outlined"
                   onChange={(e) => setGnero(e.target.value)}
                 />
                 <TextField
                   fullWidth
-                  id="outlined-basic"
-                  label="Descrição"
+                  id="outlined-multiline-static"
+                  label="Descrição" margin="normal"
                   value={descricao || item.descricao}
-                  variant="outlined"
+                  multiline
+                  rows={4}
                   onChange={(e) => setDescricao(e.target.value)}
                 />
                 <Typography>
                   <DeleteIcon
                     onClick={() => deletLivro()}
                     sx={{
+                      marginTop: "10px",
                       marginRight: "40px",
                       marginLeft: "25px",
+                      marginBottom: "20px",
                       cursor: "pointer",
                     }}
                   />
@@ -216,6 +219,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                     sx={{
                       marginRight: "40px",
                       marginLeft: "25px",
+                      marginBottom: "10px",
                       cursor: "pointer",
                     }}
                   />

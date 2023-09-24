@@ -30,6 +30,11 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
   const [genero, setGnero] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
   let [data, setData] = useState<Livro[]>([]);
+  let [message, setMessage] = useState<string>("teste");
+  let [title, setTitle] = useState<string>("teste");
+  let [type, setType] = useState<"error" | "warning" | "info" | "success" | "">(
+    "success"
+  );
 
   const showAlert = () => setOpenAlert(true);
   const closeAlert = () => setOpenAlert(false);
@@ -49,17 +54,62 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
     };
 
     if (titulo === '' || autor === '' || publicacao === '' || cadastro === '' || genero === '' || descricao === ''){
-      alert ('O(s) campo(s) não pode(m) ficar em branco')
-    } else {data.push(livro);
+    } else if (titulo === "") {
+      setTitle("ERROR");
+      setMessage("O campo Titulo é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
+
+    if (autor === "") {
+      setTitle("ERROR");
+      setMessage("O campo Autor é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
+
+    if (publicacao === "") {
+      setTitle("ERROR");
+      setMessage("O campo Publicação é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
+
+    if (cadastro === "") {
+      setTitle("ERROR");
+      setMessage("O campo cadastro é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
+
+    if (genero === "") {
+      setTitle("ERROR");
+      setMessage("O campo Gênero é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    }
+
+    if (descricao === "") {
+      setTitle("ERROR");
+      setMessage("O campo Descrição é obrigatório");
+      setType("error");
+      showAlert();
+      return;
+    } data.push(livro);
       localStorage.setItem("livro", JSON.stringify(data));
   
       upLoad();
-      handleClose();}
+      handleClose();
     };
 
   return (
     <div>
-      <Button onClick={handleOpen}>Novo Livro</Button>
+      <Button onClick={handleOpen} sx={{ backgroundColor: "rgba(111, 109, 110, 0.4)" }}>Novo Livro</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -70,7 +120,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Titulo"
+            label="Titulo" margin="normal"
             value={titulo || ""}
             variant="outlined"
             onChange={(e) => setTitulo(e.target.value)}
@@ -78,7 +128,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Autor"
+            label="Autor" margin="normal"
             value={autor || ""}
             variant="outlined"
             onChange={(e) => setAutor(e.target.value)}
@@ -87,7 +137,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            type="date"
+            type="date" margin="normal"
             value={publicacao || ""}
             variant="outlined"
             onChange={(e) => setPublicacao(e.target.value)}
@@ -96,7 +146,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            type="date"
+            type="date" margin="normal"
             value={cadastro || ""}
             variant="outlined"
             onChange={(e) => setCadastro(e.target.value)}
@@ -104,20 +154,20 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Gênero"
+            label="Gênero" margin="normal"
             value={genero || ""}
             variant="outlined"
             onChange={(e) => setGnero(e.target.value)}
           />
           <TextField
             fullWidth
-            id="outlined-basic"
-            label="Descrição"
+            id="outlined-multiline-static"
+            label="Descrição" margin="normal"
             value={descricao || ""}
-            variant="outlined"
+            multiline
+            rows={4}
             onChange={(e) => setDescricao(e.target.value)}
           />
-
           <Button variant="contained" onClick={addLivro}>
             Adicionar
           </Button>
@@ -129,9 +179,9 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
             Cancelar
           </Button>
           <TransitionAlerts
-            message="deu errado"
-            title="Error"
-            type="info"
+            message={message}
+            title={title}
+            type={type}
             open={openAlert}
             actionClose={closeAlert}
           ></TransitionAlerts>

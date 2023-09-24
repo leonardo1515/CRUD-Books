@@ -70,7 +70,7 @@ const Tabela: React.FC<TabelaType> = ({ booksData }) => {
             </TableHead>
             {/* <TableHead>
               <TableRow>
-                <TableCell sx={{ fontSize: "16px", width: "20px" }}>
+               <TableCell sx={{ fontSize: "16px", width: "20px" }}>
                   Titulo
                 </TableCell>
                 <TableCell sx={{ fontSize: "16px" }}>Autor</TableCell>

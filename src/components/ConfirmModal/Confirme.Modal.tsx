@@ -83,9 +83,9 @@ const ConfirmeModal: React.FC<TypeConfirmModal> = ({
           aria-describedby="parent-modal-description"
         >
           <Box sx={{ ...style, width: 400 }}>
-            <p>Tem certesa que quer DELETAR este livro ?</p>
+            <p>Tem certeza que quer DELETAR este livro?</p>
             <Button variant="contained" onClick={() => delet(id)}>
-              Comfirmar
+              Confirmar
             </Button>
             <Button
               variant="contained"
@@ -108,9 +108,9 @@ const ConfirmeModal: React.FC<TypeConfirmModal> = ({
           aria-describedby="parent-modal-description"
         >
           <Box sx={{ ...style, width: 400 }}>
-            <p>Tem certesa que quer EDITAR este livro ?</p>
+            <p>Tem certeza que quer EDITAR este livro?</p>
             <Button variant="contained" onClick={() => update(id)}>
-              Comfirmar
+              Confirmar
             </Button>
             <Button
               variant="contained"

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import StyledApp from "../components/StyledApp";
-import Form from "../components/Form/Form";
 import { Livro } from "../components/types";
 import Tabela from "../components/Tabela/Tabela";
 import GetLocalStorage from "../components/Atualizar/Atualizar";
+import { Box } from "@mui/system";
 
 const Home: React.FC = () => {
   const [data, setData] = useState<Livro[]>([]);
@@ -16,56 +16,22 @@ const Home: React.FC = () => {
 
   return (
     <StyledApp mode="dark">
-      <Tabela booksData={data} />
-      {/* <div className="headBg"><p>Minha primeira pagina com react</p></div>
-
-<nav className="navg">
-  <DivBtnProps mode="dark">
-    <MonitorIcon/>
-    <BtnNav text="Sincrovizar"></BtnNav>
-  </DivBtnProps>
-
-  <DivBtnProps mode="dark">
-    <MonitorIcon/>
-    <BtnNav text="Sincrovizar"></BtnNav>
-  </DivBtnProps>
-
-  <DivBtnProps mode="dark">
-    <MonitorIcon/>
-    <BtnNav text="Sincrovizar"></BtnNav>
-  </DivBtnProps>
-</nav>
-
-<main>
-
-  <ContenteMain
-    text={`Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Tenetur suscipit sit et porro? Vero, dolore ex placeat 
-            consequatur dolorum libero! Nihil ab quisquam, repellendus 
-            voluptatum numquam omnis sapiente placeat deserunt?`}
-    sorc={"/images/logo192.png"}
-  ></ContenteMain>
-
-  <ContenteMain
-    text={`Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Tenetur suscipit sit et porro? Vero, dolore ex placeat 
-            consequatur dolorum libero! Nihil ab quisquam, repellendus 
-            voluptatum numquam omnis sapiente placeat deserunt?`}
-    sorc={"/images/logo192.png"}
-  ></ContenteMain>
-
-  <ContenteMain
-    text={`Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Tenetur suscipit sit et porro? Vero, dolore ex placeat 
-            consequatur dolorum libero! Nihil ab quisquam, repellendus 
-            voluptatum numquam omnis sapiente placeat deserunt?`}
-    sorc={"/images/logo192.png"}
-  ></ContenteMain>
-
-</main>
-<footer className="foot">
-  <p>Contato</p>
-</footer> */}
+      <Box
+        sx={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundImage:
+            "url(https://i.pinimg.com/originals/ee/c3/dd/eec3ddcd9443ab529b3c2e32393ac0d9.jpg)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center center",
+        }}
+      >
+        <Tabela booksData={data} />
+      </Box>
     </StyledApp>
   );
 };

@@ -212,13 +212,10 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                       cursor: "pointer",
                     }}
                   />
-                </Typography>
-                <Typography>
                   <EditIcon
                     onClick={() => updateLivro()}
                     sx={{
-                      marginRight: "40px",
-                      marginLeft: "25px",
+                      marginLeft: "190px",
                       marginBottom: "10px",
                       cursor: "pointer",
                     }}

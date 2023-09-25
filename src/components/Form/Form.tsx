@@ -180,7 +180,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           </Button>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "red", marginRight: "90px"}}
+            sx={{ backgroundColor: "red", marginLeft: "105px"}}
             onClick={handleClose}
           >
             Cancelar

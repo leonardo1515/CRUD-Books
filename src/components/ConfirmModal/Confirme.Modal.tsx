@@ -114,7 +114,7 @@ const ConfirmeModal: React.FC<TypeConfirmModal> = ({
             </Button>
             <Button
               variant="contained"
-              sx={{ backgroundColor: "red" }}
+              sx={{ backgroundColor: "red", marginLeft: "50px" }}
               onClick={handleCloseConfirm}
             >
               Cancelar

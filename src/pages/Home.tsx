@@ -30,7 +30,7 @@ const Home: React.FC = () => {
           backgroundPosition: "center center",
         }}
       >
-        <Tabela booksData={data} />
+        <Tabela/>
       </Box>
     </StyledApp>
   );

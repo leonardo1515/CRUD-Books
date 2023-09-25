@@ -8,6 +8,7 @@ import { TextField } from "@mui/material";
 import { FormType, Livro } from "../types";
 import TransitionAlerts from "../Alerts/Alert";
 import GetLocalStorage, { upLoad } from "../Atualizar/Atualizar";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const style = {
   position: "absolute" as "absolute",
@@ -25,8 +26,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
   const [openAlert, setOpenAlert] = useState(false);
   const [titulo, setTitulo] = useState<string>("");
   const [autor, setAutor] = useState<string>("");
-  const [publicacao, setPublicacao] = useState<any>("");
-  const [cadastro, setCadastro] = useState<any>("");
+  const [publicacao, setPublicacao] = useState(new Date());
+  const [cadastro, setCadastro] = useState(new Date());
   const [genero, setGnero] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
   let [data, setData] = useState<Livro[]>([]);
@@ -41,17 +42,6 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
   React.useEffect(() => {
     setTitulo("");
     setAutor("");
-    setPublicacao("");
-    setCadastro("");
-    setGnero("");
-    setDescricao("");
-  }, [handleClose]);
-
-  React.useEffect(() => {
-    setTitulo("");
-    setAutor("");
-    setPublicacao("");
-    setCadastro("");
     setGnero("");
     setDescricao("");
   }, [handleClose]);
@@ -70,15 +60,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       descricao: descricao,
     };
 
-    if (
-      titulo === "" ||
-      autor === "" ||
-      publicacao === "" ||
-      cadastro === "" ||
-      genero === "" ||
-      descricao === ""
-    ) {
-    } else if (titulo === "") {
+    if (titulo === "") {
       setTitle("ERROR");
       setMessage("O campo Titulo é obrigatório");
       setType("error");
@@ -94,7 +76,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       return;
     }
 
-    if (publicacao === "") {
+    if (publicacao === null) {
       setTitle("ERROR");
       setMessage("O campo Publicação é obrigatório");
       setType("error");
@@ -102,7 +84,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       return;
     }
 
-    if (cadastro === "") {
+    if (cadastro === null) {
       setTitle("ERROR");
       setMessage("O campo cadastro é obrigatório");
       setType("error");
@@ -166,24 +148,14 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
             onChange={(e) => setAutor(e.target.value)}
           />
           <p> Data de publicação</p>
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            type="date"
-            margin="normal"
-            value={publicacao || ""}
-            variant="outlined"
-            onChange={(e) => setPublicacao(e.target.value)}
+          <DatePicker
+            disableFuture
+            onChange={(e) => setPublicacao(new Date())}
           />
           <p>Data de cadastro</p>
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            type="date"
-            margin="normal"
-            value={cadastro || ""}
-            variant="outlined"
-            onChange={(e) => setCadastro(e.target.value)}
+          <DatePicker
+            disableFuture
+            onChange={(e) => setCadastro(new Date())}
           />
           <TextField
             fullWidth
@@ -210,7 +182,6 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <Button
             variant="contained"
             sx={{ backgroundColor: "red", marginLeft: "105px"}}
-            sx={{ backgroundColor: "red", marginRight: "90px" }}
             onClick={handleClose}
           >
             Cancelar

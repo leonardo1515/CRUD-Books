@@ -3,9 +3,12 @@ import "./style.css";
 import StyledApp from "../components/StyledApp";
 import Tabela from "../components/Tabela/Tabela";
 import { Box } from "@mui/system";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const Home: React.FC = () => {
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <StyledApp mode="dark">
       <Box
         sx={{
@@ -24,6 +27,7 @@ const Home: React.FC = () => {
         <Tabela />
       </Box>
     </StyledApp>
+    </LocalizationProvider>
   );
 };
 export default Home;

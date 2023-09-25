@@ -11,6 +11,7 @@ import GetLocalStorage, { books } from "../Atualizar/Atualizar";
 import TransitionAlerts from "../Alerts/Alert";
 import ConfirmeModal from "../ConfirmModal/Confirme.Modal";
 import "./style.css";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const style = {
   position: "absolute" as "absolute",
@@ -33,8 +34,8 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
   );
   const [titulo, setTitulo] = useState<string>("");
   const [autor, setAutor] = useState<string>("");
-  const [publicacao, setPublicacao] = useState<any>("");
-  const [cadastro, setCadastro] = useState<any>("");
+  const [publicacao, setPublicacao] = useState(new Date());
+  const [cadastro, setCadastro] = useState(new Date());
   const [genero, setGnero] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
   const [openAlert, setOpenAlert] = useState(false);
@@ -96,7 +97,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
       return;
     }
 
-    if (publicacao === "") {
+    if (publicacao === null) {
       setTitle("ERROR");
       setMessage("O campo Publicação é obrigatório");
       setType("error");
@@ -104,7 +105,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
       return;
     }
 
-    if (cadastro === "") {
+    if (cadastro === null) {
       setTitle("ERROR");
       setMessage("O campo cadastro é obrigatório");
       setType("error");
@@ -171,25 +172,15 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
               variant="outlined"
               onChange={(e) => setAutor(e.target.value)}
             />
-            <p>Publicação</p>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              type="date"
-              margin="normal"
-              value={publicacao || ""}
-              variant="outlined"
-              onChange={(e) => setPublicacao(e.target.value)}
+            <p>Data de publicação</p>
+            <DatePicker
+              disableFuture
+              onChange={(e) => setPublicacao(new Date())}
             />
-            <p>Cadastro</p>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              type="date"
-              margin="normal"
-              value={cadastro || ""}
-              variant="outlined"
-              onChange={(e) => setCadastro(e.target.value)}
+            <p>Data de cadastro</p>
+            <DatePicker
+              disableFuture
+              onChange={(e) => setCadastro(new Date())}
             />
             <TextField
               fullWidth
@@ -221,13 +212,10 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                   cursor: "pointer",
                 }}
               />
-            </Typography>
-            <Typography>
               <EditIcon
                 onClick={() => updateLivro()}
                 sx={{
-                  marginRight: "40px",
-                  marginLeft: "25px",
+                  marginLeft: "190px",
                   marginBottom: "10px",
                   cursor: "pointer",
                 }}

@@ -39,6 +39,15 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
   const showAlert = () => setOpenAlert(true);
   const closeAlert = () => setOpenAlert(false);
 
+  React.useEffect(() => {
+    setTitulo("");
+    setAutor("");
+    setPublicacao("");
+    setCadastro("");
+    setGnero("");
+    setDescricao("");
+  }, [handleClose]);
+
   const addLivro = () => {
     const livros = GetLocalStorage();
     data = livros;
@@ -53,7 +62,14 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       descricao: descricao,
     };
 
-    if (titulo === '' || autor === '' || publicacao === '' || cadastro === '' || genero === '' || descricao === ''){
+    if (
+      titulo === "" ||
+      autor === "" ||
+      publicacao === "" ||
+      cadastro === "" ||
+      genero === "" ||
+      descricao === ""
+    ) {
     } else if (titulo === "") {
       setTitle("ERROR");
       setMessage("O campo Titulo é obrigatório");
@@ -100,16 +116,22 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       setType("error");
       showAlert();
       return;
-    } data.push(livro);
-      localStorage.setItem("livro", JSON.stringify(data));
-  
-      upLoad();
-      handleClose();
-    };
+    }
+    data.push(livro);
+    localStorage.setItem("livro", JSON.stringify(data));
+
+    upLoad();
+    handleClose();
+  };
 
   return (
     <div>
-      <Button onClick={handleOpen} sx={{ backgroundColor: "rgba(111, 109, 110, 0.4)" }}>Novo Livro</Button>
+      <Button
+        onClick={handleOpen}
+        sx={{ backgroundColor: "rgba(111, 109, 110, 0.4)" }}
+      >
+        Novo Livro
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -120,7 +142,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Titulo" margin="normal"
+            label="Titulo"
+            margin="normal"
             value={titulo || ""}
             variant="outlined"
             onChange={(e) => setTitulo(e.target.value)}
@@ -128,7 +151,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Autor" margin="normal"
+            label="Autor"
+            margin="normal"
             value={autor || ""}
             variant="outlined"
             onChange={(e) => setAutor(e.target.value)}
@@ -137,7 +161,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            type="date" margin="normal"
+            type="date"
+            margin="normal"
             value={publicacao || ""}
             variant="outlined"
             onChange={(e) => setPublicacao(e.target.value)}
@@ -146,7 +171,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            type="date" margin="normal"
+            type="date"
+            margin="normal"
             value={cadastro || ""}
             variant="outlined"
             onChange={(e) => setCadastro(e.target.value)}
@@ -154,7 +180,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-basic"
-            label="Gênero" margin="normal"
+            label="Gênero"
+            margin="normal"
             value={genero || ""}
             variant="outlined"
             onChange={(e) => setGnero(e.target.value)}
@@ -162,7 +189,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           <TextField
             fullWidth
             id="outlined-multiline-static"
-            label="Descrição" margin="normal"
+            label="Descrição"
+            margin="normal"
             value={descricao || ""}
             multiline
             rows={4}

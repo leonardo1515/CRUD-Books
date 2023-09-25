@@ -7,7 +7,7 @@ import { TextField, Typography } from "@mui/material";
 import { ExpandirType, Livro } from "../types";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { books } from "../Atualizar/Atualizar";
+import GetLocalStorage, { books } from "../Atualizar/Atualizar";
 import TransitionAlerts from "../Alerts/Alert";
 import ConfirmeModal from "../ConfirmModal/Confirme.Modal";
 import "./style.css";
@@ -46,10 +46,10 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
   const handleOpenConfirm = () => setConfirm(true);
   const handleCloseConfirm = () => setConfirm(false);
   const [livroCurret, setLivroCurret] = useState<Livro>();
-  let [data, setData] = useState<Livro[]>([]);
   let livro = books;
 
   const expandirOpen = () => {
+    GetLocalStorage();
     getLivro(idLivro);
     setExOpen(true);
   };
@@ -63,7 +63,12 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
       let book = livro.findIndex((item) => item.id === id);
       if (book >= 0) {
         const curret = livro.splice(book, 1);
-        setData(curret);
+        setTitulo(curret[0].titulo);
+        setAutor(curret[0].autor);
+        setPublicacao(curret[0].publicacao);
+        setCadastro(curret[0].cadastro);
+        setGnero(curret[0].genero);
+        setDescricao(curret[0].descricao);
       }
     },
     [livro]
@@ -147,86 +152,89 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
         aria-describedby="modal-modal-description"
       >
         <Box className="borderDefault" sx={style}>
-          {data.map((item: Livro) => {
-            return (
-              <div key={item.id}>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  label="Titulo" margin="normal"
-                  value={titulo || item.titulo}
-                  variant="outlined"
-                  onChange={(e) => setTitulo(e.target.value)}
-                />
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  label="Autor" margin="normal"
-                  value={autor || item.autor}
-                  variant="outlined"
-                  onChange={(e) => setAutor(e.target.value)}
-                />
-                <p>Publicação</p>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  type="date" margin="normal"
-                  value={publicacao || item.publicacao}
-                  variant="outlined"
-                  onChange={(e) => setPublicacao(e.target.value)}
-                />
-                <p>Cadastro</p>
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  type="date" margin="normal"
-                  value={cadastro || item.cadastro}
-                  variant="outlined"
-                  onChange={(e) => setCadastro(e.target.value)}
-                />
-                <TextField
-                  fullWidth
-                  id="outlined-basic"
-                  label="Gênero" margin="normal"
-                  value={genero || item.genero}
-                  variant="outlined"
-                  onChange={(e) => setGnero(e.target.value)}
-                />
-                <TextField
-                  fullWidth
-                  id="outlined-multiline-static"
-                  label="Descrição" margin="normal"
-                  value={descricao || item.descricao}
-                  multiline
-                  rows={4}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
-                <Typography>
-                  <DeleteIcon
-                    onClick={() => deletLivro()}
-                    sx={{
-                      marginTop: "10px",
-                      marginRight: "40px",
-                      marginLeft: "25px",
-                      marginBottom: "20px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </Typography>
-                <Typography>
-                  <EditIcon
-                    onClick={() => updateLivro()}
-                    sx={{
-                      marginRight: "40px",
-                      marginLeft: "25px",
-                      marginBottom: "10px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </Typography>
-              </div>
-            );
-          })}
+          <div>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Titulo"
+              margin="normal"
+              value={titulo}
+              variant="outlined"
+              onChange={(e) => setTitulo(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Autor"
+              margin="normal"
+              value={autor || ""}
+              variant="outlined"
+              onChange={(e) => setAutor(e.target.value)}
+            />
+            <p>Publicação</p>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              type="date"
+              margin="normal"
+              value={publicacao || ""}
+              variant="outlined"
+              onChange={(e) => setPublicacao(e.target.value)}
+            />
+            <p>Cadastro</p>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              type="date"
+              margin="normal"
+              value={cadastro || ""}
+              variant="outlined"
+              onChange={(e) => setCadastro(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              label="Gênero"
+              margin="normal"
+              value={genero || ""}
+              variant="outlined"
+              onChange={(e) => setGnero(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              id="outlined-multiline-static"
+              label="Descrição"
+              margin="normal"
+              value={descricao || ""}
+              multiline
+              rows={4}
+              onChange={(e) => setDescricao(e.target.value)}
+            />
+            <Typography>
+              <DeleteIcon
+                onClick={() => deletLivro()}
+                sx={{
+                  marginTop: "10px",
+                  marginRight: "40px",
+                  marginLeft: "25px",
+                  marginBottom: "20px",
+                  cursor: "pointer",
+                }}
+              />
+            </Typography>
+            <Typography>
+              <EditIcon
+                onClick={() => updateLivro()}
+                sx={{
+                  marginRight: "40px",
+                  marginLeft: "25px",
+                  marginBottom: "10px",
+                  cursor: "pointer",
+                }}
+              />
+            </Typography>
+          </div>
+
           <TransitionAlerts
             message={message}
             title={title}
@@ -239,7 +247,6 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
             livroCurret={livroCurret}
             typeConfirm={typeConfirm}
             openConfirm={openConfirm}
-            handleOpenConfirm={handleOpenConfirm}
             handleCloseConfirm={handleCloseConfirm}
           />
         </Box>

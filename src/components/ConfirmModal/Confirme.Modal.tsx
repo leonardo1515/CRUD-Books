@@ -29,7 +29,6 @@ const ConfirmeModal: React.FC<TypeConfirmModal> = ({
   livroCurret,
   typeConfirm,
   openConfirm,
-  handleOpenConfirm,
   handleCloseConfirm,
 }) => {
   const delet = React.useCallback((id: number) => {
@@ -51,9 +50,6 @@ const ConfirmeModal: React.FC<TypeConfirmModal> = ({
   const update = React.useCallback(
     (id: number) => {
       const allBooks = GetLocalStorage();
-
-      // const livros = GetLocalStorage();
-      // allBooks = livros;
 
       let book = allBooks.findIndex((item) => item.id === id);
       if (book >= 0) {

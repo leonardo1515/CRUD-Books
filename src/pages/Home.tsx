@@ -1,19 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./style.css";
 import StyledApp from "../components/StyledApp";
-import { Livro } from "../components/types";
 import Tabela from "../components/Tabela/Tabela";
-import GetLocalStorage from "../components/Atualizar/Atualizar";
 import { Box } from "@mui/system";
 
 const Home: React.FC = () => {
-  const [data, setData] = useState<Livro[]>([]);
-
-  useEffect(() => {
-    const livros = GetLocalStorage();
-    setData(livros);
-  }, []);
-
   return (
     <StyledApp mode="dark">
       <Box
@@ -30,7 +21,7 @@ const Home: React.FC = () => {
           backgroundPosition: "center center",
         }}
       >
-        <Tabela booksData={data} />
+        <Tabela />
       </Box>
     </StyledApp>
   );

@@ -38,6 +38,14 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
 
   const showAlert = () => setOpenAlert(true);
   const closeAlert = () => setOpenAlert(false);
+  React.useEffect(() => {
+    setTitulo("");
+    setAutor("");
+    setPublicacao("");
+    setCadastro("");
+    setGnero("");
+    setDescricao("");
+  }, [handleClose]);
 
   React.useEffect(() => {
     setTitulo("");
@@ -157,7 +165,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
             variant="outlined"
             onChange={(e) => setAutor(e.target.value)}
           />
-          <p>Publicação</p>
+          <p> Data de publicação</p>
           <TextField
             fullWidth
             id="outlined-basic"
@@ -167,7 +175,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
             variant="outlined"
             onChange={(e) => setPublicacao(e.target.value)}
           />
-          <p>Cadastro</p>
+          <p>Data de cadastro</p>
           <TextField
             fullWidth
             id="outlined-basic"
@@ -201,7 +209,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           </Button>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "red" }}
+            sx={{ backgroundColor: "red", marginRight: "90px" }}
             onClick={handleClose}
           >
             Cancelar

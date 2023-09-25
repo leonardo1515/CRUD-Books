@@ -9,6 +9,8 @@ import { FormType, Livro } from "../types";
 import TransitionAlerts from "../Alerts/Alert";
 import GetLocalStorage, { upLoad } from "../Atualizar/Atualizar";
 import { DatePicker } from "@mui/x-date-pickers";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import { margin } from "@mui/system";
 
 const style = {
   position: "absolute" as "absolute",
@@ -26,7 +28,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
   const [openAlert, setOpenAlert] = useState(false);
   const [titulo, setTitulo] = useState<string>("");
   const [autor, setAutor] = useState<string>("");
-  const [publicacao, setPublicacao] = useState(new Date());
+  const [publicacao, setPublicacao] = useState("");
   const [cadastro, setCadastro] = useState(new Date());
   const [genero, setGnero] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
@@ -46,16 +48,22 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
     setDescricao("");
   }, [handleClose]);
 
+  const formatar = (data:any) => {
+    const myDate = new Date(data).toLocaleString().split(",");
+    console.log('myDate');
+    console.log(myDate);
+  }
   const addLivro = () => {
     const livros = GetLocalStorage();
     data = livros;
+    const myDate = new Date(Date.now()).toLocaleString().split(",");
 
     const livro = {
       id: Math.floor(Date.now() / 1000),
       titulo: titulo,
       autor: autor,
       publicacao: publicacao,
-      cadastro: cadastro,
+      cadastro: myDate[0],
       genero: genero,
       descricao: descricao,
     };
@@ -76,7 +84,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       return;
     }
 
-    if (publicacao === null) {
+    if (publicacao === "") {
       setTitle("ERROR");
       setMessage("O campo Publicação é obrigatório");
       setType("error");
@@ -107,6 +115,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       showAlert();
       return;
     }
+    formatar(publicacao);
     data.push(livro);
     localStorage.setItem("livro", JSON.stringify(data));
 
@@ -118,8 +127,9 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
     <div>
       <Button
         onClick={handleOpen}
-        sx={{ backgroundColor: "rgba(111, 109, 110, 0.4)" }}
+        sx={{ backgroundColor: "rgba(111, 109, 110, 0.4)"}}
       >
+        <AutoStoriesIcon sx={{marginRight:"10px"}}/>
         Novo Livro
       </Button>
       <Modal
@@ -148,14 +158,19 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
             onChange={(e) => setAutor(e.target.value)}
           />
           <p> Data de publicação</p>
-          <DatePicker
-            disableFuture
-            onChange={(e) => setPublicacao(new Date())}
+          <TextField
+          type="date"
+            fullWidth
+            id="outlined-basic"
+            margin="dense"
+            value={ publicacao || ""}
+            variant="outlined"
+            onChange={(e) => setPublicacao(e.target.value)}
           />
           <p>Data de cadastro</p>
           <DatePicker
             disableFuture
-            onChange={(e) => setCadastro(new Date())}
+            onChange={(e) => setCadastro(new Date(cadastro))}
           />
           <TextField
             fullWidth

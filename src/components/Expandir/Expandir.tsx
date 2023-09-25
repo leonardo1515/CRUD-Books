@@ -11,7 +11,7 @@ import GetLocalStorage, { books } from "../Atualizar/Atualizar";
 import TransitionAlerts from "../Alerts/Alert";
 import ConfirmeModal from "../ConfirmModal/Confirme.Modal";
 import "./style.css";
-import { DatePicker } from "@mui/x-date-pickers";
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
   position: "absolute" as "absolute",
@@ -34,8 +34,8 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
   );
   const [titulo, setTitulo] = useState<string>("");
   const [autor, setAutor] = useState<string>("");
-  const [publicacao, setPublicacao] = useState(new Date());
-  const [cadastro, setCadastro] = useState(new Date());
+  const [publicacao, setPublicacao] = useState("");
+  const [cadastro, setCadastro] = useState("");
   const [genero, setGnero] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
   const [openAlert, setOpenAlert] = useState(false);
@@ -97,7 +97,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
       return;
     }
 
-    if (publicacao === null) {
+    if (publicacao === "") {
       setTitle("ERROR");
       setMessage("O campo Publicação é obrigatório");
       setType("error");
@@ -105,7 +105,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
       return;
     }
 
-    if (cadastro === null) {
+    if (cadastro === "") {
       setTitle("ERROR");
       setMessage("O campo cadastro é obrigatório");
       setType("error");
@@ -154,6 +154,8 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
       >
         <Box className="borderDefault" sx={style}>
           <div>
+            <CloseIcon onClick ={expandirClose} sx={{marginBottom:"5px", marginLeft:"300px"}}>
+            </CloseIcon>
             <TextField
               fullWidth
               id="outlined-basic"
@@ -173,14 +175,25 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
               onChange={(e) => setAutor(e.target.value)}
             />
             <p>Data de publicação</p>
-            <DatePicker
-              disableFuture
-              onChange={(e) => setPublicacao(new Date())}
+            <TextField
+              fullWidth
+              type="date"
+              id="outlined-basic"
+              margin="normal"
+              value={publicacao || ""}
+              variant="outlined"
+              onChange={(e) => setPublicacao(e.target.value)}
             />
             <p>Data de cadastro</p>
-            <DatePicker
-              disableFuture
-              onChange={(e) => setCadastro(new Date())}
+            <TextField
+              fullWidth
+              disabled
+              id="outlined-basic"
+              label="cadastro"
+              margin="normal"
+              value={cadastro || ""}
+              variant="outlined"
+              onChange={(e) => setCadastro(e.target.value)}
             />
             <TextField
               fullWidth

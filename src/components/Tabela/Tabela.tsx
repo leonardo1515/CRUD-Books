@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import "./style.css";
 import { Livro } from "../types";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import GetLocalStorage, { books, load } from "../Atualizar/Atualizar";
 import Form from "../Form/Form";
 import Expandir from "../Expandir/Expandir";
@@ -65,7 +64,6 @@ const Tabela: React.FC = () => {
                     handleOpen={handleOpen}
                     open={open}
                   />
-                  <AutoStoriesIcon />
                 </TableCell>
               </TableRow>
             </TableHead>

@@ -5,6 +5,6 @@ export interface TypeConfirmModal {
   livroCurret: Livro | undefined;
   typeConfirm: string;
   openConfirm: boolean;
-  handleOpenConfirm: () => void;
+  // handleOpenConfirm: () => void;
   handleCloseConfirm: () => void;
 }

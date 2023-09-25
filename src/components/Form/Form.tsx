@@ -53,7 +53,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       descricao: descricao,
     };
 
-    if (titulo === "") {
+    if (titulo === '' || autor === '' || publicacao === '' || cadastro === '' || genero === '' || descricao === ''){
+    } else if (titulo === "") {
       setTitle("ERROR");
       setMessage("O campo Titulo é obrigatório");
       setType("error");
@@ -132,7 +133,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
             variant="outlined"
             onChange={(e) => setAutor(e.target.value)}
           />
-          <p>Data de publicação</p>
+          <p>Publicação</p>
           <TextField
             fullWidth
             id="outlined-basic"
@@ -141,7 +142,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
             variant="outlined"
             onChange={(e) => setPublicacao(e.target.value)}
           />
-          <p>Data de cadastro</p>
+          <p>Cadastro</p>
           <TextField
             fullWidth
             id="outlined-basic"
@@ -172,8 +173,9 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
           </Button>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "red", marginLeft: "105px"}}
-            onClick={handleClose}>
+            sx={{ backgroundColor: "red" }}
+            onClick={handleClose}
+          >
             Cancelar
           </Button>
           <TransitionAlerts

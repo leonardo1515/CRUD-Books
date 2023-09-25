@@ -166,7 +166,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                   variant="outlined"
                   onChange={(e) => setAutor(e.target.value)}
                 />
-                <p>Data de publicação</p>
+                <p>Publicação</p>
                 <TextField
                   fullWidth
                   id="outlined-basic"
@@ -175,7 +175,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                   variant="outlined"
                   onChange={(e) => setPublicacao(e.target.value)}
                 />
-                <p>Data de cadastro</p>
+                <p>Cadastro</p>
                 <TextField
                   fullWidth
                   id="outlined-basic"
@@ -205,18 +205,21 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
                   <DeleteIcon
                     onClick={() => deletLivro()}
                     sx={{
-                      marginTop: "20px",
+                      marginTop: "10px",
                       marginRight: "40px",
                       marginLeft: "25px",
+                      marginBottom: "20px",
                       cursor: "pointer",
                     }}
                   />
+                </Typography>
+                <Typography>
                   <EditIcon
                     onClick={() => updateLivro()}
                     sx={{
-                      marginTop: "20px",
                       marginRight: "40px",
-                      marginLeft: "177px",
+                      marginLeft: "25px",
+                      marginBottom: "10px",
                       cursor: "pointer",
                     }}
                   />

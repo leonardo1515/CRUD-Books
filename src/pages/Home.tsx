@@ -1,26 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import "./style.css";
 import StyledApp from "../components/StyledApp";
 import Tabela from "../components/Tabela/Tabela";
 import { Box } from "@mui/system";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { TextField } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
-import GetLocalStorage from "../components/Atualizar/Atualizar";
-import { Livro } from "../components/types";
 
 const Home: React.FC = () => {
-  const [resBusca, setResBusca] = useState<Livro[]>([]);
-  const buscar = (autor:string) => {
-   const resultado = GetLocalStorage();
-   for (let i = 0; i < resultado.length; i++) {
-    if (resultado[i].autor === autor) {
-      resBusca.push(resultado[i]);
-      console.log(resBusca)
-    }
-  }
-  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -39,10 +25,6 @@ const Home: React.FC = () => {
           backgroundPosition: "center center",
         }}
       > 
-        <SearchIcon onClick={() => buscar("")}>
-        </SearchIcon>
-        <TextField label= "Buscar"> 
-        </TextField>
         <Tabela />
       </Box>
     </StyledApp>

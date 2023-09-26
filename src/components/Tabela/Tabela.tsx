@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
+  Button,
   Grid,
   Paper,
   Table,
@@ -9,12 +10,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
+  Typography,
 } from "@mui/material";
 import "./style.css";
 import { Livro } from "../types";
 import GetLocalStorage, { books, load } from "../Atualizar/Atualizar";
 import Form from "../Form/Form";
 import Expandir from "../Expandir/Expandir";
+import Filtro from "../Filtro/Filtro";
 
 const Tabela: React.FC = () => {
   let reload = load;
@@ -24,6 +28,8 @@ const Tabela: React.FC = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [tituloFiltro, setTituloFiltro] = useState<string>("");
+
   useEffect(() => {
     const i = GetLocalStorage();
 
@@ -31,8 +37,33 @@ const Tabela: React.FC = () => {
   }, [load]);
 
   return (
+    <Box>
+      <Typography sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center", marginBottom:"50px"}}>
+      <TextField sx={{backgroundColor: "rgba(111, 109, 110, 0.4)", fontSize:"20px"}}
+              fullWidth
+              id="outlined-basic"
+              label="Buscar por título"
+              margin="normal"
+              value={tituloFiltro}
+              variant="outlined"
+              onChange={(e) => setTituloFiltro(e.target.value)}
+            />
+            <Box sx={{height:"55px", backgroundColor: "rgba(111, 109, 110, 0.4)", 
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop:"7px",
+              marginRight:"20px", WebkitBorderBottomRightRadius:"5px", WebkitBorderTopRightRadius:"5px"}}><Filtro tituloFiltro={tituloFiltro}></Filtro>
+            </Box>
+            <Button onClick={() => setTituloFiltro("")} sx={{ backgroundColor: "rgba(111, 109, 110, 0.4)"}}>Limpar
+            </Button>
+      </Typography>      
     <Box
       sx={{
+        marginLeft:"60px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -91,6 +122,7 @@ const Tabela: React.FC = () => {
           </Table>
         </TableContainer>
       </Grid>
+    </Box>
     </Box>
   );
 };

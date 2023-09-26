@@ -145,7 +145,7 @@ const Expandir: React.FC<ExpandirType> = ({ idLivro }) => {
 
   return (
     <>
-      <Button onClick={expandirOpen}>Expandir</Button>
+      <Button onClick={expandirOpen} sx={{ backgroundColor: "rgba(111, 109, 110, 0.4)"}}>Expandir</Button>
       <Modal
         open={open}
         onClose={expandirClose}

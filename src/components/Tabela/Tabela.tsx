@@ -68,7 +68,7 @@ const Tabela: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableCell>
+              <TableCell >
                 {data.map((item: Livro) => {
                   return (
                     <TableRow
@@ -77,9 +77,9 @@ const Tabela: React.FC = () => {
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
                     >
-                      <TableCell> {item.titulo} </TableCell>
-                      <TableCell>{item.autor}</TableCell>
-                      <TableCell>{item.genero}</TableCell>
+                      <TableCell sx={{fontSize:"20px"}}> {item.titulo} </TableCell>
+                      <TableCell sx={{fontSize:"20px"}}>{item.autor}</TableCell>
+                      <TableCell sx={{fontSize:"20px"}}>{item.genero}</TableCell>
                       <TableCell>
                         <Expandir idLivro={item.id} />
                       </TableCell>

@@ -28,7 +28,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
   const [openAlert, setOpenAlert] = useState(false);
   const [titulo, setTitulo] = useState<string>("");
   const [autor, setAutor] = useState<string>("");
-  const [publicacao, setPublicacao] = useState("");
+  const [publicacao, setPublicacao] = useState<any>("");
   const [cadastro, setCadastro] = useState(new Date());
   const [genero, setGnero] = useState<string>("");
   const [descricao, setDescricao] = useState<string>("");
@@ -43,6 +43,7 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
   const closeAlert = () => setOpenAlert(false);
   React.useEffect(() => {
     setTitulo("");
+    setPublicacao("");
     setAutor("");
     setGnero("");
     setDescricao("");
@@ -52,6 +53,8 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
     const myDate = new Date(data).toLocaleString().split(",");
     console.log('myDate');
     console.log(myDate);
+    console.log(cadastro);
+    console.log(publicacao);
   }
   const addLivro = () => {
     const livros = GetLocalStorage();
@@ -99,6 +102,15 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
       showAlert();
       return;
     }
+
+    // TO DO
+    // if (cadastro < publicacao) {
+    //   setTitle("ERROR");
+    //   setMessage("A data de cadastro não pode ser menor que a data de publicação");
+    //   setType("error");
+    //   showAlert();
+    //   return;
+    // }
 
     if (genero === "") {
       setTitle("ERROR");
@@ -167,11 +179,11 @@ const Form: React.FC<FormType> = ({ handleClose, handleOpen, open }) => {
             variant="outlined"
             onChange={(e) => setPublicacao(e.target.value)}
           />
-          <p>Data de cadastro</p>
+          {/* <p>Data de cadastro</p>
           <DatePicker
             disableFuture
-            onChange={(e) => setCadastro(new Date(cadastro))}
-          />
+            onChange={(e) => setCadastro(new Date(cadastro))} /> */}
+          
           <TextField
             fullWidth
             id="outlined-basic"
